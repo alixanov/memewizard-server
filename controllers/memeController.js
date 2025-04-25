@@ -32,4 +32,25 @@ const getMyMemes = async (req, res) => {
   }
 };
 
-module.exports = { publishMeme, getMyMemes };
+const deleteMeme = async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const meme = await Meme.findById(id);
+    if (!meme) {
+      return res.status(404).json({ message: 'Meme not found' });
+    }
+
+    if (meme.userId.toString() !== req.user.id) {
+      return res.status(403).json({ message: 'You are not authorized to delete this meme' });
+    }
+
+    await Meme.deleteOne({ _id: id });
+    res.json({ message: 'Meme deleted successfully' });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'Server error' });
+  }
+};
+
+module.exports = { publishMeme, getMyMemes, deleteMeme };
