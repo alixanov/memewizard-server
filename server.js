@@ -33,7 +33,7 @@ const PORT = process.env.PORT || 5000;
 
 // Define allowed origins
 const allowedOrigins = [
-  'https://memewizard.vercel.app',
+  'https://memewizard.org',
   ...(process.env.NODE_ENV !== 'production'
     ? ['http://localhost:3000', 'http://localhost:3001']
     : []),
